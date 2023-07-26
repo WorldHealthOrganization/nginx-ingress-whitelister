@@ -1,14 +1,14 @@
 config:
   map: addon-http-application-routing-nginx-configuration
-  repo: https://github.com/SchulzeStTSI/nginx-ingress-whitelister.git
-  tag: v1
+  repo: https://github.dev/WorldHealthOrganization/nginx-ingress-whitelister
+  tag: main
   seperator: "#---- WHITELIST ----"
 bundle:
-  name: ca-bundle
+  name: gateway-ca-bundle
+  namespace: default
   repo: Location for Folder
 ingress:
-  name: whitelist-rule
+  name: gateway
   namespace: default
 job: 
   schedule: '*/1 * * * *'
-

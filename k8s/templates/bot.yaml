@@ -32,9 +32,9 @@ spec:
                 - name: CONFIG_NAMESPACE
                   value: {{ .Release.Namespace }}
                 - name: BUNDLE_NAMESPACE
-                  value: {{ .Release.Namespace }}
+                  value: {{ .Values.bundle.namespace }}
                 - name: BUNDLE_NAME
-                  value: {{ .Release.Name }}-{{ .Values.bundle.name }}
+                  value: {{ .Values.bundle.name }}
                 - name: SEPERATOR
                   value: {{ .Values.config.seperator | quote }}
                 - name: INGRESS_NAME
