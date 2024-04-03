@@ -19,7 +19,7 @@ spec:
                 defaultMode: 420
           containers:
             - name: {{ .Release.Name }}-bot
-              image: alpine
+              image: alpine:3.18
               env: 
                 - name: TAG
                   value: {{ .Values.config.tag }}
