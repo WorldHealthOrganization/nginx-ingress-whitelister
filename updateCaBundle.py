@@ -10,21 +10,22 @@ bundle_namespace = os.environ.get("BUNDLE_NAMESPACE")
 bundle_name=os.environ.get("BUNDLE_NAME")
 
 def is_valid_certificate(content):
-    try:
-        x509.load_pem_x509_certificate(content.encode("utf-8"), default_backend())
-        return True
-    except Exception:
-        return False
+  try:
+    x509.load_pem_x509_certificate(content.encode("utf-8"), default_backend())
+    return True
+  except Exception:
+    return False
 
 files = glob.glob("./certificateFolder/**/TLS/CA*.pem", recursive=True)
 ca_bundle = ""
 
 for file in files:
-    with open(file, "r") as f:
-        data = f.read()
-
-    if is_valid_certificate(data):
-        ca_bundle +="\n"+data  
+  with open(file, "r") as f:
+    data = f.read()
+  if is_valid_certificate(data):
+    ca_bundle = ca_bundle+"\n"+data
+  else
+    ca_bundle = ca_bundle+"\n"
   
 if len(files) and ca_bundle:
   api_instance = client.CoreV1Api()
@@ -36,4 +37,3 @@ if len(files) and ca_bundle:
   api_instance.patch_namespaced_secret(namespace=bundle_namespace,name=bundle_name, body=body)
 else: 
   print("No files found or empty CA bundle")
-    
