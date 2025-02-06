@@ -24,9 +24,9 @@ for file in files:
     data = f.read()
   if is_valid_certificate(data):
     ca_bundle = ca_bundle+"\n"+data
-  else
-    ca_bundle = ca_bundle+"\n"
-  
+  else:
+    print("Skipping invalid certificate file: {file}")
+    
 if len(files) and ca_bundle:
   api_instance = client.CoreV1Api()
   body = client.V1Secret()
