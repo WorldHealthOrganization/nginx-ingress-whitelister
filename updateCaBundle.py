@@ -1,18 +1,30 @@
 import os
 import glob
 import base64
-from kubernetes import client, config
+from cryptography import x509
+from cryptography.hazmat.backends import default_backend
 
 config.load_incluster_config()
 
 bundle_namespace = os.environ.get("BUNDLE_NAMESPACE")
 bundle_name=os.environ.get("BUNDLE_NAME")
+
+def is_valid_certificate(content):
+    try:
+        x509.load_pem_x509_certificate(content.encode("utf-8"), default_backend())
+        return True
+    except Exception:
+        return False
+
 files = glob.glob("./certificateFolder/**/TLS/CA*.pem", recursive=True)
 ca_bundle = ""
+
 for file in files:
-  with open(file) as f:
-    data = f.read()
-  ca_bundle = ca_bundle+"\n"+data
+    with open(file, "r") as f:
+        data = f.read()
+
+    if is_valid_certificate(data):
+        ca_bundle +="\n"+data  
   
 if len(files) and ca_bundle:
   api_instance = client.CoreV1Api()
