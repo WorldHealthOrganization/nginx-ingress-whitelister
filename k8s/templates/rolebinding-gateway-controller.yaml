@@ -9,5 +9,5 @@ subjects:
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
-  name: {{ .Release.Name }}-ingress-controller-role
+  name: {{ .Release.Name }}-gateway-controller-role
   apiGroup: rbac.authorization.k8s.io

@@ -8,5 +8,5 @@ subjects:
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: {{ .Release.Name }}-ingress-rule-role
+  name: {{ .Release.Name }}-gateway-rule-role
   apiGroup: rbac.authorization.k8s.io

@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ .Release.Name }}-ingress-rule-role
+  name: {{ .Release.Name }}-gateway-rule-role
 rules:
   - apiGroups:
       [
@@ -10,12 +10,12 @@ rules:
         "rbac.authorization.k8s.io",
         "roles.rbac.authorization.k8s.io",
         "authorization.k8s.io",
-        "networking.k8s.io",
-        "networking.k8s.io/v1",
+        "gateway.envoyproxy.io/v1alpha1",
+        "gateway.envoyproxy.io",
         "extensions",
       ]
-    resources: ["ingresses"]
-    resourceNames: [{{ .Values.ingress.name }}]
+    resources: ["clienttrafficpolicies"]
+    resourceNames: [{{ .Values.clienttrafficpolicy.name }}]
     verbs: ["get", "list", "patch", "update"]
   - apiGroups:
       [

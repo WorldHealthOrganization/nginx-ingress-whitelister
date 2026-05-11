@@ -27,20 +27,14 @@ spec:
                   value: {{ .Values.config.repo }}
                 - name: CERTIFICATEFOLDER
                   value: {{ .Values.bundle.repo }}
-                - name: CONFIG_MAP
-                  value: {{ .Values.config.map }}
-                - name: CONFIG_NAMESPACE
-                  value: {{ .Release.Namespace }}
                 - name: BUNDLE_NAMESPACE
                   value: {{ .Values.bundle.namespace }}
                 - name: BUNDLE_NAME
                   value: {{ .Values.bundle.name }}
-                - name: SEPERATOR
-                  value: {{ .Values.config.seperator | quote }}
-                - name: INGRESS_NAME
-                  value: {{ .Values.ingress.name }}
-                - name: INGRESS_NAMESPACE
-                  value: {{ .Values.ingress.namespace }}
+                - name: POLICY_NAME
+                  value: {{ .Values.clienttrafficpolicy.name }}
+                - name: POLICY_NAMESPACE
+                  value: {{ .Values.clienttrafficpolicy.namespace }}
               args:
                 - /bin/sh
                 - /tmp/script.sh

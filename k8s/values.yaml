@@ -1,14 +1,12 @@
 config:
-  map: addon-http-application-routing-nginx-configuration
-  repo: https://github.dev/WorldHealthOrganization/nginx-ingress-whitelister
-  tag: main
-  seperator: "#---- WHITELIST ----"
+  repo: https://github.com/WorldHealthOrganization/nginx-ingress-whitelister.git
+  tag: envoy
 bundle:
-  name: gateway-ca-bundle
+  name: gateway-ca-bundle-envoy
   namespace: default
-  repo: Location for Folder
-ingress:
-  name: gateway
+  repo: https://github.com/WorldHealthOrganization/tng-participants-dev.git 
+clienttrafficpolicy:
+  name: xfcc-policy
   namespace: default
 job: 
-  schedule: '*/1 * * * *'
+  schedule: '*/50 * * * *'

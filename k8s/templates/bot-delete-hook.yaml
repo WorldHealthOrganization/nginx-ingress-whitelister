@@ -17,20 +17,10 @@ spec:
               value: {{ .Values.config.tag }}
             - name: REPO
               value: {{ .Values.config.repo }}
-            - name: CONFIG_NAMESPACE
-              value: {{ .Release.Namespace }}
-            - name: CONFIG_MAP
-              value: {{ .Values.config.map }}
             - name: BUNDLE_NAMESPACE
               value: {{ .Release.Namespace }}
             - name: BUNDLE_NAME
               value: {{ .Values.bundle.name }}
-            - name: SEPERATOR
-              value: {{ .Values.config.seperator | quote }}
-            - name: INGRESS_NAME
-              value: {{ .Values.ingress.name }}
-            - name: INGRESS_NAMESPACE
-              value: {{ .Values.ingress.namespace }}
-          command: ["sh", "-c", "apk add --update py-pip	> /dev/null;apk add --update py-pip	> /dev/null;apk add --update git > /dev/null; apk add --update bash > /dev/null;git clone $REPO --branch $TAG bot;  pip install -r /bot/requirements.txt > /dev/null;python /bot/removeFingerprints.py; python /bot/removeCaBundle.py;python /bot/removeIngressAnnotation.py"]
+          command: ["sh", "-c", "apk add --update py-pip	> /dev/null;apk add --update py-pip	> /dev/null;apk add --update git > /dev/null; apk add --update bash > /dev/null;git clone $REPO --branch $TAG bot;  pip install -r /bot/requirements.txt > /dev/null; python /bot/removeCaBundle.py"]
           imagePullPolicy: Always
       restartPolicy: Never

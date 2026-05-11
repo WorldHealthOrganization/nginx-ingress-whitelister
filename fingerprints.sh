@@ -1,19 +1,36 @@
-#!/bin/bash
+#!/bin/sh
 
-nginx_conf="$1/nginx_conf"
+# --- Validate input ---
+if [[ $# -lt 1 ]]; then
+    echo "Usage: $(basename "$0") <search_dir>" >&2
+    exit 1
+fi
 
-echo 'map $ssl_client_fingerprint $reject {' >> $nginx_conf
-echo "default 1;" >> $nginx_conf
+search_dir="$1"
 
+if [[ ! -d "$search_dir" ]]; then
+    echo "Error: '$search_dir' is not a directory." >&2
+    exit 1
+fi
+
+# --- Output files (truncated on each run) ---
+hashes="${search_dir}/hashes_list"
+invalid_certs="${search_dir}/invalid"
+> "$hashes"
+> "$invalid_certs"
+
+# --- Process certificates ---
 for cert in $(/usr/bin/find $1 -path **/TLS/* -name TLS*.pem)
 do
-    fingerprint=$(openssl x509 -in "$cert" -noout -fingerprint -sha1 | sed 's/SHA1 Fingerprint=//;s/sha1 Fingerprint=//; s/://g')
-    # Check to prevent whitelisting empty certs
-    if [ "$(echo -n "$fingerprint" | wc -m)" -eq 40 ]; then
-        echo "$fingerprint 0;" >> "$nginx_conf"
+    #fingerprint=$(
+    #    openssl x509 -in "$cert" -noout -fingerprint -sha256 | sed 's/.*Fingerprint=//; s/://g'
+    #)
+    fingerprint=$(openssl x509 -in "$cert" -noout -fingerprint -sha256 | sed 's/sha256 Fingerprint=//;s/sha256 Fingerprint=//; s/://g')
+
+    # Expect exactly 64 hex characters; reject empty / malformed output
+    if [ "$(echo -n "$fingerprint" | wc -m)" -eq 64 ]; then
+        echo "$fingerprint" >> "$hashes"
     else
-        echo "##Invalid fingerprint: $cert" >> "$nginx_conf"
+        printf '## Invalid fingerprint: %s\n' "$cert" >> "$invalid_certs"
     fi
 done
-
-echo "}" >> $nginx_conf
