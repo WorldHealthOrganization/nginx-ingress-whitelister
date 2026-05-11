@@ -9,4 +9,4 @@ clienttrafficpolicy:
   name: xfcc-policy
   namespace: default
 job: 
-  schedule: '*/50 * * * *'
+  schedule: '*/60 * * * *'
