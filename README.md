@@ -3,23 +3,6 @@
 > Automated certificate whitelisting and pinning for Envoy Gateway with Kubernetes integration
 
 
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Architecture](#architecture)
-- [Prerequisites](#prerequisites)
-- [Quick Start](#quick-start)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Scripts Documentation](#scripts-documentation)
-- [Kubernetes Resources](#kubernetes-resources)
-- [Monitoring & Troubleshooting](#monitoring--troubleshooting)
-- [FAQ](#faq)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## 🎯 Overview
 
 The **Envoy Gateway Fingerprint Whitelister ** is a Kubernetes-native solution that automates client certificate validation for Envoy Gateway deployments. This project simplifies the complex setup of mutual TLS (mTLS) authentication by automatically:
