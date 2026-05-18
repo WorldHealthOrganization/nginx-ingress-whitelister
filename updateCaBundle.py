@@ -26,7 +26,7 @@ for file in files:
   if is_valid_certificate(data):
     ca_bundle = ca_bundle+"\n"+data
   else:
-    print("Skipping invalid certificate file: {file}")
+    print(f"Skipping invalid certificate file: {file}")
     
 if len(files) and ca_bundle:
   api_instance = client.CoreV1Api()
